@@ -67,10 +67,7 @@ Track your daily expenses, manage categories, and see total spending in real tim
 
 
 ---
-
-
-
-\## 📂 Project Structure
+created by rushikesh
 
 
 
