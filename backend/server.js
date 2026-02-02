@@ -10,9 +10,9 @@ app.use(express.json());
 
 // 🔌 DB Connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/expenseDB")
+  .connect("mongodb://localhost:27017/expenseDB")
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("❌ DB Error:", err));
+  .catch(err => console.error("❌ MongoDB Error:", err.message));
 
 // ➕ ADD EXPENSE
 app.post("/api/expenses", async (req, res) => {
