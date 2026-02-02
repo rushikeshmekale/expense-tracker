@@ -1,4 +1,4 @@
-const API = "http://localhost:5000";
+const API = "https://expense-backend.onrender.com";
 
 
 const titleEl = document.getElementById("title");
