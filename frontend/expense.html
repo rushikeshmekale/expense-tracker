@@ -18,29 +18,41 @@
     <input id="title" placeholder="Expense title" />
     <input id="amount" type="number" placeholder="Amount ₹" />
     
-    <select id="category">
-      <option>Food</option>
-      <option>Travel</option>
-      <option>Shopping</option>
-      <option>Bills</option>
-      <option>Other</option>
-    </select>
+   <select id="category">
+  <option>Food</option>
+  <option>Travel</option>
+  <option>Shopping</option>
+  <option>Bills</option>
+  <option>Other</option>
+</select>
+
 
     <input id="date" type="date" />
-    <button onclick="addExpense()">➕ Add Expense</button>
-  </section>
+   <button id="addBtn">Add Expense</button></section>
 
-  <section class="card summary">
-    <h2>Total Spent</h2>
-    <div class="total">₹ <span id="total">0</span></div>
-  </section>
+<section class="card summary">
+  <h2>Account Balance</h2>
+  <input id="balanceInput" type="number" placeholder="Enter total balance ₹" />
+  <button id="saveBalance">Save Balance</button>
+</section>
+
+<section class="card summary">
+  <h2>Total Spent</h2>
+  <div class="total">₹ <span id="total">0</span></div>
+</section>
+
+<section class="card summary">
+  <h2>Remaining Balance</h2>
+  <div class="total">₹ <span id="remaining">0</span></div>
+</section>
+
 
   <section class="card table-card">
     <table>
       <thead>
         <tr>
           <th>Title</th>
-          <th>₹</th>
+          <th>₹ Amount</th>
           <th>Category</th>
           <th>Date</th>
           <th></th>
@@ -51,10 +63,10 @@
   </section>
 
   <footer>
-    Built with discipline 💪
+    become a smart spender 💰
   </footer>
 </div>
 
-<script src="expense.js"></script>
+<script src="expense.js" ></script>
 </body>
 </html>

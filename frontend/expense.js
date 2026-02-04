@@ -1,44 +1,46 @@
-const API = "https://expense-backend.onrender.com";
-
+const API = "http://localhost:5000";
 
 const titleEl = document.getElementById("title");
 const amountEl = document.getElementById("amount");
-const categoryEl = document.getElementById("category");
 const dateEl = document.getElementById("date");
+const categoryEl = document.getElementById("category");
 const listEl = document.getElementById("list");
 const totalEl = document.getElementById("total");
+const balanceInput = document.getElementById("balanceInput");
+const remainingEl = document.getElementById("remaining");
+
+const savedBalance = localStorage.getItem("balance");
+if (savedBalance) {
+  balanceInput.value = savedBalance;
+}
+document.getElementById("saveBalance").onclick = () => {
+  localStorage.setItem("balance", Number(balanceInput.value));
+  calculateRemaining();
+};
+function calculateRemaining() {
+  const balance = Number(localStorage.getItem("balance")) || 0;
+  const totalExpenses = Number(totalEl.textContent) || 0;
+  const remaining = balance - totalExpenses;
+  remainingEl.textContent = remaining;
+}
+
+document.getElementById("addBtn").onclick = addExpense;
 
 async function addExpense() {
-  if (!titleEl.value || !amountEl.value || !dateEl.value) {
-    alert("Fill all fields 🧾");
-    return;
-  }
-
-  const res = await fetch(`${API}/api/expenses`, {
+  await fetch(`${API}/api/expenses`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       title: titleEl.value,
       amount: Number(amountEl.value),
-      category: categoryEl.value,
-      date: dateEl.value
+      date: dateEl.value,
+      category: categoryEl.value
     })
   });
-
-  if (!res.ok) {
-    const err = await res.json();
-    alert(err.error);
-    return;
-  }
-
-  titleEl.value = "";
-  amountEl.value = "";
-  dateEl.value = "";
 
   loadExpenses();
   loadTotal();
 }
-
 
 async function loadExpenses() {
   const res = await fetch(`${API}/api/expenses`);
@@ -46,31 +48,40 @@ async function loadExpenses() {
 
   listEl.innerHTML = "";
 
-  data.forEach(e => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${e.title}</td>
-      <td>₹${e.amount}</td>
-      <td>${e.category}</td>
-      <td>${new Date(e.date).toLocaleDateString()}</td>
-      <td><button class="delete">✖</button></td>
-    `;
+  data.forEach(exp => {
+    const tr = document.createElement("tr");
 
-    row.querySelector(".delete").onclick = async () => {
-      await fetch(`${API}/api/expenses/${e._id}`, { method: "DELETE" });
+   tr.innerHTML = `
+  <td>${exp.title}</td>
+  <td>${exp.amount}</td>
+  <td>${exp.category}</td>
+  <td>${exp.date ? exp.date.slice(0, 10) : ""}</td>
+  <td>
+    <button class="delete-btn" data-id="${exp._id}">❌</button>
+  </td>
+`;
+
+
+    tr.querySelector("button").onclick = async () => {
+      await fetch(`${API}/api/expenses/${exp._id}`, {
+        method: "DELETE"
+      });
       loadExpenses();
-      loadTotal(); // 🔥 IMPORTANT
+      loadTotal();
     };
 
-    listEl.appendChild(row);
+    listEl.appendChild(tr);
   });
 }
+
 async function loadTotal() {
   const res = await fetch(`${API}/api/analytics/total`);
   const data = await res.json();
- totalEl.textContent = data.total;
-
+  totalEl.textContent = data.total;
+  calculateRemaining();
 }
+
+
 
 loadExpenses();
 loadTotal();

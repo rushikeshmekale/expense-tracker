@@ -39,6 +39,16 @@ header p {
   opacity: 0.7;
   margin-top: 6px;
 }
+/* Selected value */
+#category {
+  color: white;
+  /* optional but recommended */
+}
+
+/* Dropdown options */
+#category option {
+  color: black;
+}
 
 .card {
   background: var(--card);
@@ -61,7 +71,7 @@ input, select {
   border-radius: 10px;
   border: none;
   outline: none;
-  background: rgba(255,255,255,0.1);
+  background: rgba(235, 219, 219, 0.097);
   color: var(--text);
 }
 
@@ -79,7 +89,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(108,242,194,0.4);
+  box-shadow: 0 8px 20px rgba(70, 156, 122, 0.4);
 }
 
 .summary {
@@ -141,4 +151,16 @@ footer {
 @keyframes slideUp {
   from { transform: translateY(20px); opacity: 0 }
   to { transform: translateY(0); opacity: 1 }
+}
+.delete-btn {
+  background: #ffffff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #7c3039;
 }
